@@ -5,26 +5,31 @@ import City from "../assets/icon-location.svg";
 import Company from "../assets/icon-company.svg";
 import Twitter from "../assets/icon-twitter.svg";
 import Website from "../assets/icon-website.svg";
+import Octocat from "./Octocat";
 import {useState, useEffect} from "react";
 
 const DisplayProfile = ()=> {
        const [isOpen, setIsOpen] = useState(false)
+       const [txtError, setTxtError] = useState(false)
             const [userData, setUserData] = useState([]);
-                const [input, setInput] = useState("")
-                 const [getName, setName] = useState("")
+                const [input, setInput] = useState("") 
 
+
+                  
     
-
+        
 
     const handleClick = ()=> {
         setIsOpen(!isOpen)
     }
 
         const handleUserSearch = ()=> {
-            getData(input); 
-            setInput("")
+
+                getData(input); 
+                setInput("");
         }
 
+       
         const handleInput = (e)=> {
             setInput(e.target.value);
            
@@ -32,30 +37,116 @@ const DisplayProfile = ()=> {
 
 
     async function getData(name) {
-        const res = await fetch(`https://api.github.com/users/${name}`);
-        const data = await res.json();
-        console.log("One the of the developer that use github", data)
-        setUserData(data)
-      }
+        try {
+            const res = await fetch(`https://api.github.com/users/${name}`);
+            const data = await res.json();
+            console.log("One the of the developer that use github", data)
+            setUserData(data)
+        }
+            catch(error) {
+                console.log(error);
+                
+            }
+        }
+
+
     
-      
+
+     
+
    useEffect( ()=> {
-        getData("duraanali");
-        
+        getData("octocat");
       },[])
 
 
-      console.log("stata data", userData);
+      
 
 
-      const date = new Date(userData.created_at);
-         const dateString= date.toLocaleDateString();
 
+        const date = new Date(userData.created_at);
+        const dateString= date.toLocaleDateString();
+
+        
+
+    function DisplayComponent() {
+        UserProfile()
+
+    }
+
+         const UserProfile = ()=> {
+            return(
+                <div className="profile-section">
+                <div className="profile-info">
+                    <img src= {userData.avatar_url} alt= "" />
+                    <div className="split">
+                        <div className="div-1">
+                            <h1>{userData.name}</h1>
+                            <span> {`@${userData.login}`}</span>
+                        </div>
+                        <div className="div-2">
+                            <p>{`Joinded ${dateString}`}</p>
+                        </div>
+                    </div>
+                </div>
+    
+                    {  <p className="bio">
+                    {userData.bio}
+                    </p>  &&  <p className="bio">
+                        This profile has no bio
+                    </p>}
+
+                    <div className="social-media-activities">
+                            <ul>
+                                <li>Repos</li>
+                                <strong>{userData.public_repos}</strong>
+                            </ul>
+                            <ul>
+                                <li>Followers</li>
+                                <strong> {userData.followers}</strong>
+                            </ul>
+                            <ul>
+                                <li>Following</li>
+                                <strong>{userData.following}</strong>
+                            </ul>
+                </div>
+
+                <div className="more-info">
+                    <div className="icon">
+                    <img src= {City} alt="location icon" />
+                        {
+                            userData.location == null ? <span>Not a Available</span> : <span>{userData.location}</span>
+                        }
+                    </div>
+                    <div className="icon">
+                        <img src= {Website} alt="website icon" />
+                        
+                        {
+                            userData.blog == null ? <span>Not a Avaible</span> : <a href= {userData.blog} target="_blank">{userData.blog}</a>
+                        }
+                    </div>
+                    <div className="icon">
+                        <img src= {Twitter} alt=" twitter icon" />
+                        {
+                            userData.twitter_username == null ? <span>Not Availabe</span> : <span>{userData.twitter_username}</span>
+                        }
+                    </div>
+                    <div className="icon">
+                    <img src= {Company} alt=" company icon" />
+                        {
+                            userData.Company == null ? <span>Not Availabe</span> : <span>{userData.Company}</span>
+                        }
+                    </div>
+                </div>
+
+    </div>
+    
+            )}
          
+
 
     return(
 
-    <div className="container">
+    <div className= { `container  ${isOpen ? "light-them" : ""}`}>
         <section>
             <header>
                 <h1>Devfinder</h1>
@@ -76,78 +167,18 @@ const DisplayProfile = ()=> {
                     <input type="text"
                         placeholder="search GitHub username"
                             value={input}
-                                onChange={handleInput}
-                     />
+                                onChange={handleInput}  />
+                                <p className= {`no-result  txt-hide ${ txtError ? "txt-show" : " "}`}>No results </p>
                 </div>
+                
                 <button onClick={handleUserSearch}>Search</button>
             </div>
 
-            <div className="profile-section">
-                <div className="profile-info">
-                    <img src= {userData.avatar_url} alt= "" />
-                    <div className="split">
-                        <div className="div-1">
-                            <h1>{userData.name}</h1>
-                            <span> {`@${userData.login}`}</span>
-                        </div>
-                        <div className="div-2">
-                            <p>{`Joinded ${dateString}`}</p>
-                        </div>
-                    </div>
-                </div>
+                 </section>
 
-                <p className="bio">
-                   {userData.bio}
-                </p>
-
-                <div className="social-media-activities">
-                        <ul>
-                            <li>Repos</li>
-                            <strong>{userData.public_repos}</strong>
-                        </ul>
-                        <ul>
-                            <li>Followers</li>
-                            <strong> {userData.followers}</strong>
-                        </ul>
-                        <ul>
-                            <li>Following</li>
-                            <strong>{userData.following}</strong>
-                        </ul>
-            </div>
-
-                <div className="more-info">
-                    <div className="icon">
-                    <img src= {City} alt="location icon" />
-                        {
-                            userData.location == null ? <span>Not a Available</span> : <span>{userData.location}</span>
-                        }
-                    </div>
-                    <div className="icon">
-                        <img src= {Website} alt="website icon" />
-                        
-                        {
-                            userData.blog == null ? <span>Not a Avaible</span> : <a href= {userData.blog} target="_blank">{userData.blog}</a>
-                        }
-                    </div>
-                    <div className="icon">
-                        <img src= {Twitter} alt=" twitter icon" />
-                        {
-                            userData.twitter_username == null ? <span>Not Availabe</span> : <span>{userData.twitter_username}</span>
-                         }
-                    </div>
-                    <div className="icon">
-                    <img src= {Company} alt=" company icon" />
-                         {
-                            userData.Company == null ? <span>Not Availabe</span> : <span>{userData.Company}</span>
-                         }
-                    </div>
-                </div>
-
-            </div>
-
-         
-        </section>
-
+              { 
+                UserProfile()
+              }
         </div>
     )
 }

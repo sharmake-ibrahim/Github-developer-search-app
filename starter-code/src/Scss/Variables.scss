@@ -1,4 +1,27 @@
+
+//Dark-mode
+
 $white-Clr: #FFFFFF;
 $dodgerBlue: #0079FF;
 $section-bg-clr: #1E2A47;
 $main-Clr: #141D2F;
+$red-clr: #F74646;
+
+
+///light-mode
+$white-Clr: #FFFFFF;
+$dodgerBlue: #0079FF;
+$main-bg-light-mode: #FEFEFE;
+$lightblue: #697C9A;
+$title-clr: #2B3442;
+$profile-txt-clr: #4B6A9B;
+$Bg-light: #F6F8FF;
+$searchBox: $white-Clr, $profile-txt-clr;
+$btnHover: #60ABFF;
+
+
+
+@mixin Light-mode($bg, $txt) {
+    background: $bg;
+    color: $txt;
+}
