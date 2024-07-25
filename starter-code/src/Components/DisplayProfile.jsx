@@ -15,11 +15,12 @@ const DisplayProfile = ()=> {
                 const [input, setInput] = useState("") 
 
 
-                  
+     
     
         
 
     const handleClick = ()=> {
+    
         setIsOpen(!isOpen)
     }
 
