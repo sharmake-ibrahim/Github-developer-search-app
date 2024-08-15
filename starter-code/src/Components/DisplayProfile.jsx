@@ -122,7 +122,7 @@ const DisplayProfile = ()=> {
                         <img src= {Website} alt="website icon" />
                         
                         {
-                            userData.blog == null ? <span>Not a Avaible</span> : <a href= {userData.blog} target="_blank">{userData.blog}</a>
+                            userData.blog == null ? <span>Not a Avaible</span> : <span> <a href= {userData.blog} target="_blank">{userData.blog}</a></span>
                         }
                     </div>
                     <div className="icon">
@@ -151,14 +151,14 @@ const DisplayProfile = ()=> {
         <section>
             <header>
                 <h1>Devfinder</h1>
-                <nav> 
+                <nav onClick={handleClick}> 
                     <div className= { `light-mode  ${ isOpen ? "hide" : ""}`}>
                         <strong>LIGHT</strong>  
-                        <img src= {Sun} alt="Moon Icon"  onClick={handleClick} /> 
+                        <img src= {Sun} alt="Moon Icon"  /> 
                         </div> 
                     <div className= {`dark-mode " ${ isOpen ? "show" : "hide"}`}>
                         <strong>DARK</strong>  
-                        <img src= {Moon} alt="Moon Icon"  onClick={handleClick}/> 
+                        <img src= {Moon} alt="Moon Icon"/> 
                         </div> 
                 </nav>
             </header>

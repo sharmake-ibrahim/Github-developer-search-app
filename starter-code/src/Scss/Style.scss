@@ -84,6 +84,7 @@ $Large-Screen: 768px;
             margin-top: 15px;
             padding: 0 2rem;
             border-radius: 10px;
+         
 
             .flex {
                 display: flex;
@@ -144,7 +145,6 @@ $Large-Screen: 768px;
 }
 
 .profile-section {
-    // margin-top: 15px;
     background-color: $section-bg-clr;
     border-radius: 5px;
     min-height: 28.313rem;
@@ -183,7 +183,14 @@ $Large-Screen: 768px;
         span {
             color: $dodgerBlue;
             font-size: 13px;
+            
+            a {
+                color: $dodgerBlue;
+                font-size: 13px;
+            }
         }
+
+
 
         .div-2 {
             p {
@@ -273,6 +280,10 @@ $Large-Screen: 768px;
         h1 {
             color: $title-clr;
         }
+
+        nav {
+            cursor:pointer
+        }
     }
 
     .search-container {
@@ -306,5 +317,19 @@ $Large-Screen: 768px;
             h1 {
                 color: $title-clr;
             }
+        }
+
+        .more-info {
+            span {
+                a {
+                    color: $profile-txt-clr;
+                    text-decoration: none;
+                }
+           
+         }
+        }
+
+        nav {
+            cursor: pointer;
         }
 }
