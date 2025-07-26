@@ -9,7 +9,10 @@ import Octocat from "./Octocat";
 import {useState, useEffect} from "react";
 
 const DisplayProfile = ()=> {
-       const [isOpen, setIsOpen] = useState(false)
+       const [isOpen, setIsOpen] = useState(()=> {
+            const stored = localStorage.getItem("isOpen");
+            return stored === "true"
+       })
        const [txtError, setTxtError] = useState(false)
             const [userData, setUserData] = useState([]);
                 const [input, setInput] = useState("") 
@@ -24,12 +27,25 @@ const DisplayProfile = ()=> {
         setIsOpen(!isOpen)
     }
 
+    const debouce = (fn, delay)=> {
+        let timeoutId;
+
+        return function(...args) {
+            clearTimeout(timeoutId);
+
+            timeoutId = setTimeout(() => {
+                    fn.apply(this, args);
+            }, delay);
+        }
+    }
+
         const handleUserSearch = ()=> {
 
                 getData(input); 
                 setInput("");
         }
 
+        const debouncedSearch = debouce(handleUserSearch, 400);
        
         const handleInput = (e)=> {
             setInput(e.target.value);
@@ -57,7 +73,8 @@ const DisplayProfile = ()=> {
 
    useEffect( ()=> {
         getData("octocat");
-      },[])
+        localStorage.setItem("isOpen", isOpen)
+      },[isOpen])
 
 
       
@@ -172,7 +189,7 @@ const DisplayProfile = ()=> {
                                 <p className= {`no-result  txt-hide ${ txtError ? "txt-show" : " "}`}>No results </p>
                 </div>
                 
-                <button onClick={handleUserSearch}>Search</button>
+                <button onClick={debouncedSearch}>Search</button>
             </div>
 
                  </section>
